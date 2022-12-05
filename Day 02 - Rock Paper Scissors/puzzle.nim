@@ -1,54 +1,28 @@
-import strutils
+import strutils, tables
 
-let
-  rounds = readFile("strategy.txt").splitLines()
-  x = 1
-  y = 2
-  z = 3
+let rounds = readFile("strategy.txt").splitLines()
 var total = 0
 
 # Part 01
 # function to evaluate a round and return the score
-proc evalRoundV1(round: string): int =
-  let cmp = round.toLowerAscii()
-  case cmp
-  of "a x", "b y", "c z": #draws
-    if (cmp[^1] == 'x'): result = 3 + x
-    elif (cmp[^1] == 'y'): result = 3 + y
-    else: result = 3 + z
-  of "a y", "b z", "c x":
-    if (cmp[^1] == 'x'): result = 6 + x
-    elif (cmp[^1] == 'y'): result = 6 + y
-    else: result = 6 + z
-  else:
-    if (cmp[^1] == 'x'): result = x
-    elif (cmp[^1] == 'y'): result = y
-    else: result = z
+let A1 = newTable({'X':(1+3),'Y':(2+6),'Z':(3+0)})
+let B1 = newTable({'X':(1+0),'Y':(2+3),'Z':(3+6)})
+let C1 = newTable({'X':(1+6),'Y':(2+0),'Z':(3+3)})
+let scoresV1 = newTable({'A':A1,'B':B1,'C':C1})
 
 for play in rounds.items:
-  total = total + evalRoundV1(play)
+  total += scoresV1[play[0]][play[2]]
 
 echo "Total score (part 1): ", total
 
 # Part 02
 total = 0
-proc evalRoundV2(round: string): int =
-  let cmp = round.toLowerAscii()
-  case cmp
-  of "a y", "b y", "c y": #draws
-    if (cmp[0] == 'a'): result = 3 + x
-    elif (cmp[0] == 'b'): result = 3 + y
-    else: result = 3 + z
-  of "a z", "b z", "c z":
-    if (cmp[0] == 'a'): result = 6 + y
-    elif (cmp[0] == 'b'): result = 6 + z
-    else: result = 6 + x
-  else:
-    if (cmp[0] == 'a'): result = z
-    elif (cmp[0] == 'b'): result = x
-    else: result = y
+let A2 = newTable({'X':(3+0),'Y':(1+3),'Z':(2+6)})
+let B2 = newTable({'X':(1+0),'Y':(2+3),'Z':(3+6)})
+let C2 = newTable({'X':(2+0),'Y':(3+3),'Z':(1+6)})
+let scoresV2 = newTable({'A':A2,'B':B2,'C':C2})
 
 for play in rounds.items:
-  total = total + evalRoundV2(play)
+  total += scoresV2[play[0]][play[2]]
 
 echo "Total score (part 2): ", total
