@@ -4,7 +4,6 @@ let rounds = readFile("strategy.txt").splitLines()
 var total = 0
 
 # Part 01
-# function to evaluate a round and return the score
 let A1 = newTable({'X':(1+3),'Y':(2+6),'Z':(3+0)})
 let B1 = newTable({'X':(1+0),'Y':(2+3),'Z':(3+6)})
 let C1 = newTable({'X':(1+6),'Y':(2+0),'Z':(3+3)})
