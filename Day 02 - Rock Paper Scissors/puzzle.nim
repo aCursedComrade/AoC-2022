@@ -1,6 +1,6 @@
 import strutils, tables
 
-let rounds = readFile("strategy.txt").splitLines()
+let rounds = readFile("input.txt").splitLines()
 var total = 0
 
 # Part 01
